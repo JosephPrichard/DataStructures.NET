@@ -135,8 +135,7 @@ namespace DataStructures.linear.list
                 return;
             var capacity = Elements.Length;
             var resizedElements = new E[(size-capacity)+(capacity*2)];
-            Array.Copy(Elements,0,
-                resizedElements,0,Size);
+            Array.Copy(Elements,0, resizedElements,0,Size);
             Elements = resizedElements;
         }
 

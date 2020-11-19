@@ -9,7 +9,7 @@ namespace DataStructures
     public class Program 
     {
         private static void Main(string[] args) {
-            TestArrayHeap();
+            TestVec();
         }
 
         private static void Output<E>(ICollection<E> list) {
@@ -75,10 +75,13 @@ namespace DataStructures
             while(!heap4.IsEmpty()) {
                 Console.WriteLine("Pop4: " + heap4.Pop());
             }
-            for(var i = 0; i < 100000; i++) {
+            for(var i = 100000; i > 0; i--) {
                 heap4.Push(i);
             }
-            
+            while(!heap4.IsEmpty()) {
+                heap4.Pop();
+            }
+            Console.WriteLine("Complete.");
         }
 
         private static void TestArrayHeap() {
@@ -105,8 +108,28 @@ namespace DataStructures
             heap.PrintConsole();
             for (var i = 1; i < 10; i++) {
                 Console.WriteLine("PopPush: " + heap.PopPush(i));
-                heap.PrintConsole();
             }
+            
+            int[] arr = {52,116,-2,-5,3,-1};
+            var heap4 = new ArrayHeap<int>((child,parent) => child < parent,arr);
+            heap4.PrintConsole();
+            heap4.Push(22);
+            heap4.Push(3);
+            heap4.Push(62);
+            heap4.Push(-701);
+            heap4.Push(5);
+            heap4.Push(-21);
+            heap4.PrintConsole();
+            while(!heap4.IsEmpty()) {
+                Console.WriteLine("Pop4: " + heap4.Pop());
+            }
+            for(var i = 100000; i > 0; i--) {
+                heap4.Push(i);
+            }
+            while(!heap4.IsEmpty()) {
+                heap4.Pop();
+            }
+            Console.WriteLine("Complete.");
         }
 
         private static void TestSortStack() {
@@ -117,6 +140,7 @@ namespace DataStructures
             stack.Push(5);
             stack.Push(10);
             Output(StackUtils.SortStack(stack));
+            Console.WriteLine("Complete.");
         }
 
         private static void TestStack() {
@@ -136,6 +160,7 @@ namespace DataStructures
             stack.AddAll(stack1);
             
             Output(stack);
+            Console.WriteLine("Complete.");
         }
 
         private static void TestVec() {
@@ -184,7 +209,7 @@ namespace DataStructures
             for(var i = 0; i < 100000; i++) {
                 vector.Push(i);
             }
-
+            Console.WriteLine("Complete.");
         }
 
         public static void TestLl() {
@@ -212,6 +237,8 @@ namespace DataStructures
             list.Sort((left, right) => left > right);
 
             Output(list);
+            
+            Console.WriteLine("Complete.");
         }
     }
 }

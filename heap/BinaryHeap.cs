@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Xsl;
 using DataStructures.linear;
 using DataStructures.linear.stack;
 
@@ -65,7 +66,7 @@ namespace DataStructures.heap
             default:
                 var val2 = Root.Val;
                 Extract(Root,Navigate(Size));
-                Sink(Root);
+                SiftDown(Root);
                 Size--;
                 return val2;
             }
@@ -84,20 +85,9 @@ namespace DataStructures.heap
             default:
                 var val2 = Root.Val;
                 Replace(Root,Navigate(Size),e);
-                Sink(Root);
+                SiftDown(Root);
                 return val2;
             }
-        }
-
-        private static bool Contains(Node<E> node, E e, Func<E,E,bool> compare) {
-            var isEqual = compare(e,node.Val);
-            if(node.Left != null) {
-                return Contains(node.Left,e,compare) || isEqual;
-            }
-            if(node.Right != null) {
-                return Contains(node.Left,e,compare) || isEqual;
-            }
-            return isEqual;
         }
 
         private static ICollection<int> Navigate(int pos) {
@@ -175,33 +165,13 @@ namespace DataStructures.heap
             }
         }
 
-        private void Sink(Node<E> curr) {
-            switch(Direction(curr.Left,curr.Right,curr)) {
-            case -1:
-                Swap(curr.Left,curr);
-                Sink(curr.Left);
-                break;
-            case 1:
-                Swap(curr.Right,curr);
-                Sink(curr.Right);
-                break;
-            }
-        }
-
-        private int Direction(Node<E> left, Node<E> right, Node<E> parent) {
-            if(right == null) {
-                if (left  == null) {
-                    return 0;
-                }
-                else {
-                    return Compare(left.Val, parent.Val) ? -1 : 0;
-                }
-            }
-            if(Compare(left.Val, right.Val)) {
-                return Compare(left.Val, parent.Val) ? -1 : 0;
-            }
-            else {
-                return Compare(right.Val, parent.Val) ? 1 : 0;
+        private void SiftDown(Node<E> curr) {
+            if(curr.Left == null)
+                return;
+            var child = curr.Right == null || Compare(curr.Left.Val, curr.Right.Val) ? curr.Left : curr.Right;
+            if(Compare(child.Val,curr.Val)) {
+                Swap(child,curr);
+                SiftDown(child);
             }
         }
 
