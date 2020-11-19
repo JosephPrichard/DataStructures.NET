@@ -9,7 +9,7 @@ namespace DataStructures
     public class Program 
     {
         private static void Main(string[] args) {
-            TestVec();
+            TestArrayHeap();
         }
 
         private static void Output<E>(ICollection<E> list) {
@@ -17,117 +17,62 @@ namespace DataStructures
                 Console.Write(" Item: "+item);
             Console.WriteLine();
         }
+        
+        private static int RandomNumber(int min, int max) {
+            var random = new Random(); 
+            return random.Next(min, max);
+        }
 
         private static void TestBinaryHeap() {
-            var heap = new BinaryHeap<int>((child,parent) => child < parent);
-            heap.Push(-10);
-            Console.WriteLine("Pop: " + heap.Pop());
-            heap.Push(-2);
-            Console.WriteLine("Pop: " + heap.Pop());
-            heap.Push(15);
-            Console.WriteLine("Pop: " + heap.Pop());
-            heap.Push(17);
-            Console.WriteLine("Pop: " + heap.Pop());
-            Console.WriteLine("Pop: " + heap.Pop());
-            heap.Push(900);
-            heap.Push(15);
-            heap.Push(-2);
-            heap.Push(12);
-            heap.Push(13);
-            heap.Push(-1);
-            heap.Push(9);
-            heap.Push(10);
+            int[] arr = {52,116,-2,-5,3,-1};
+            var heap = new BinaryHeap<int>(HeapType.Min,arr);
+            heap.Push(22);
+            heap.Push(3);
+            heap.Push(62);
+            heap.Push(-701);
+            heap.Push(5);
+            heap.Push(-21);
             while(!heap.IsEmpty()) {
                 Console.WriteLine("Pop: " + heap.Pop());
             }
-            heap.Push(2);
-            heap.Push(10);
-            Console.WriteLine("PopPush: " + heap.PopPush(4));
-            Console.WriteLine("PopPush: " + heap.PopPush(901));
-            Console.WriteLine("PopPush: " + heap.PopPush(-3));
-            Console.WriteLine("PopPush: " + heap.PopPush(5));
-            Console.WriteLine("PopPush: " + heap.PopPush(-5));
-            Console.WriteLine("PopPush: " + heap.PopPush(1));
-            Console.WriteLine("PopPush: " + heap.PopPush(2));
-            Console.WriteLine("Pop: " + heap.Pop());
-            Console.WriteLine("Pop: " + heap.Pop());
-
-            var heap2 = new BinaryHeap<int>((child,parent) => child < parent);
-            heap2.Push(900);
-            heap2.Push(15);
-            heap2.Push(-2);
-            heap2.Push(12);
-            heap2.Push(13);
-            heap2.Push(-1);
-            while(!heap2.IsEmpty()) {
-                Console.WriteLine("Pop2: " + heap2.Pop());
+            Console.WriteLine("Push More ");
+            for(var i = 0; i < 100; i++) {
+                heap.Push(RandomNumber(-1000,1000));
             }
-
-            int[] arr = {52,116,-2,-5,3,-1};
-            var heap4 = new BinaryHeap<int>(arr,(child,parent) => child > parent);
-            heap4.Push(22);
-            heap4.Push(3);
-            heap4.Push(62);
-            heap4.Push(-701);
-            heap4.Push(5);
-            heap4.Push(-21);
-            heap4.PrintConsole();
-            while(!heap4.IsEmpty()) {
-                Console.WriteLine("Pop4: " + heap4.Pop());
+            while(!heap.IsEmpty()) {
+                Console.WriteLine("Pop: " + heap.Pop());
             }
-            for(var i = 100000; i > 0; i--) {
-                heap4.Push(i);
-            }
-            while(!heap4.IsEmpty()) {
-                heap4.Pop();
+            Console.WriteLine("PopPush ");
+            for(var i = 0; i < 5; i++) {
+                Console.WriteLine("PopPush: " + heap.PopPush(RandomNumber(-100,100)));
+                Console.WriteLine("Peek: " + heap.Peek());
             }
             Console.WriteLine("Complete.");
         }
 
         private static void TestArrayHeap() {
-            var heap = new ArrayHeap<int>((child,parent) => child < parent);
-            heap.Push(5);
-            Console.WriteLine("Peek: " + heap.Peek());
-            heap.Push(4);
-            Console.WriteLine("Peek: " + heap.Peek());
+            int[] arr = {52,116,-2,-5,3,-1};
+            var heap = new ArrayHeap<int>(HeapType.Min,arr);
+            heap.Push(22);
             heap.Push(3);
-            Console.WriteLine("Peek: " + heap.Peek());
-            heap.Push(2);
-            Console.WriteLine("Peek: " + heap.Peek());
-            heap.Push(6);
-            Console.WriteLine("Peek: " + heap.Peek());
-            heap.PrintConsole();
+            heap.Push(62);
+            heap.Push(-701);
+            heap.Push(5);
+            heap.Push(-21);
             while(!heap.IsEmpty()) {
                 Console.WriteLine("Pop: " + heap.Pop());
             }
-            heap.Push(5);
-            heap.Push(4);
-            heap.Push(3);
-            heap.Push(2);
-            heap.Push(6);
-            heap.PrintConsole();
-            for (var i = 1; i < 10; i++) {
-                Console.WriteLine("PopPush: " + heap.PopPush(i));
+            Console.WriteLine("Push More ");
+            for(var i = 0; i < 100; i++) {
+                heap.Push(RandomNumber(-1000,1000));
             }
-            
-            int[] arr = {52,116,-2,-5,3,-1};
-            var heap4 = new ArrayHeap<int>((child,parent) => child < parent,arr);
-            heap4.PrintConsole();
-            heap4.Push(22);
-            heap4.Push(3);
-            heap4.Push(62);
-            heap4.Push(-701);
-            heap4.Push(5);
-            heap4.Push(-21);
-            heap4.PrintConsole();
-            while(!heap4.IsEmpty()) {
-                Console.WriteLine("Pop4: " + heap4.Pop());
+            while(!heap.IsEmpty()) {
+                Console.WriteLine("Pop: " + heap.Pop());
             }
-            for(var i = 100000; i > 0; i--) {
-                heap4.Push(i);
-            }
-            while(!heap4.IsEmpty()) {
-                heap4.Pop();
+            Console.WriteLine("PopPush ");
+            for(var i = 0; i < 5; i++) {
+                Console.WriteLine("PopPush: " + heap.PopPush(RandomNumber(-100,100)));
+                Console.WriteLine("Peek: " + heap.Peek());
             }
             Console.WriteLine("Complete.");
         }
@@ -164,7 +109,7 @@ namespace DataStructures
         }
 
         private static void TestVec() {
-            var vector = new Vector<int>(5);
+            var vector = new ArrayList<int>(5);
             vector.Push(1);
             vector.PushBack(2);
             Output(vector);
@@ -193,7 +138,7 @@ namespace DataStructures
             vector.PushBack(21);
             vector.PushBack(2);
 
-            var vector1 = new Vector<int>();
+            var vector1 = new ArrayList<int>();
             vector1.Push(5);
             vector1.PushBack(6);
             vector1.Push(4);
@@ -207,7 +152,7 @@ namespace DataStructures
             Output(vector);
             
             for(var i = 0; i < 100000; i++) {
-                vector.Push(i);
+                vector.PushBack(i);
             }
             Console.WriteLine("Complete.");
         }

@@ -5,20 +5,26 @@ using DataStructures.linear.stack;
 
 namespace DataStructures.heap
 {
-    public class BinaryHeap<E> : IHeap<E>
+    public class BinaryHeap<E> : IHeap<E> where E : IComparable
     {
         private Node<E> Root;
         public int Size { private set; get; }
-        private readonly Func<E, E, bool> Compare;
+        private readonly Func<E, E, bool> IsBetter;
 
-        public BinaryHeap(Func<E, E, bool> compare) {
+        public BinaryHeap(HeapType type) {
+            if(type == HeapType.Min) 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == -1;
+            else 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == 1;
             Root = null;
-            Compare = compare;
         }
 
         //heapify - O(nlog(n))
-        public BinaryHeap(E[] arr, Func<E, E, bool> compare) {
-            Compare = compare;
+        public BinaryHeap(HeapType type, E[] arr) {
+            if(type == HeapType.Min) 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == -1;
+            else 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == 1;
             foreach(var i in arr)
                 Push(i);
         }
@@ -168,8 +174,8 @@ namespace DataStructures.heap
         private void SiftDown(Node<E> curr) {
             if(curr.Left == null)
                 return;
-            var child = curr.Right == null || Compare(curr.Left.Val, curr.Right.Val) ? curr.Left : curr.Right;
-            if(Compare(child.Val,curr.Val)) {
+            var child = curr.Right == null || IsBetter(curr.Left.Val, curr.Right.Val) ? curr.Left : curr.Right;
+            if(IsBetter(child.Val,curr.Val)) {
                 Swap(child,curr);
                 SiftDown(child);
             }
@@ -180,7 +186,7 @@ namespace DataStructures.heap
         }
 
         private void SwapIf(Node<E> child, Node<E> parent) {
-            if(Compare(child.Val, parent.Val)) {
+            if(IsBetter(child.Val, parent.Val)) {
                 Swap(child, parent);
             }
         }

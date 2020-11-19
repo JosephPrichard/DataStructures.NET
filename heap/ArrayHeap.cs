@@ -3,30 +3,38 @@ using System.Runtime.InteropServices;
 
 namespace DataStructures.heap
 {
-    public class ArrayHeap<E> : IHeap<E>
+    public class ArrayHeap<E> : IHeap<E> where E : IComparable
     {
         private E[] Elements;
         public int Size { private set; get; }
-        private readonly Func<E, E, bool> Compare;
+        private readonly Func<E, E, bool> IsBetter;
         
-        public ArrayHeap(Func<E, E, bool> compare) {
+        public ArrayHeap(HeapType type) {
+            if(type == HeapType.Min) 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == -1;
+            else 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == 1;
             Elements = new E[20];
-            Compare = compare;
         }
 
-        public ArrayHeap(Func<E, E, bool> compare, int capacity) {
+        public ArrayHeap(HeapType type, int capacity) {
+            if(type == HeapType.Min) 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == -1;
+            else 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == 1;
             Elements = new E[capacity];
-            Compare = compare;
         }
         
         //heapify - O(n)
-        public ArrayHeap(Func<E, E, bool> compare, E[] array) {
+        public ArrayHeap(HeapType type, E[] array) {
+            if(type == HeapType.Min) 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == -1;
+            else 
+                IsBetter = (ele1, ele2) => ele1.CompareTo(ele2) == 1;
             Elements = array;
             Size = array.Length;
-            Compare = compare;
-            for(var i = Elements.Length-1; i >= 0; i--) {
+            for(var i = Elements.Length-1; i >= 0; i--)
                 SiftDown(i);
-            }
         }
 
         public int Depth() {
@@ -62,6 +70,8 @@ namespace DataStructures.heap
 
         //O(log(n))
         public E Pop() {
+            if(Size == 0)
+                return default;
             var val = Elements[0];
             Move(Size-1,0);
             SiftDown(0);
@@ -71,17 +81,24 @@ namespace DataStructures.heap
 
         //O(log(n))
         public E PopPush(E e) {
-            var val = Elements[0];
-            Elements[0] = e;
-            SiftDown(0);
-            return val;
+            if(Size != 0) {
+                var val = Elements[0];
+                Elements[0] = e;
+                SiftDown(0);
+                return val;
+            }
+            else {
+                Size++;
+                Elements[0] = e;
+                return default;
+            }
         }
 
         private void SiftUp(int pos) {
             var parent = (pos-1)/2;
             while(parent >= 0 && pos >= 0) {
-                if(Compare(Elements[pos],Elements[parent])) {
-                    Swap(parent,pos);
+                if(IsBetter(Elements[pos],Elements[parent])) {
+                    Swap(pos,parent);
                     pos = parent;
                     parent = (pos-1)/2;
                 }
@@ -96,17 +113,17 @@ namespace DataStructures.heap
             var right= (2*pos)+2;
             if(left >= Size)
                 return;
-            var child = right >= Size || Compare(Elements[left],Elements[right]) ? left : right;
-            if(Compare(Elements[child],Elements[pos])) {
+            var child = right >= Size || IsBetter(Elements[left],Elements[right]) ? left : right;
+            if(IsBetter(Elements[child],Elements[pos])) {
                 Swap(child,pos);
                 SiftDown(child);
             }
         }
 
         private void EnsureCapacity(int size) {
-            if(size < Elements.Length)
-                return;
             var capacity = Elements.Length;
+            if(size < capacity)
+                return;
             var resizedElements = new E[(size-capacity)+(capacity*2)];
             Array.Copy(Elements,0, resizedElements,0,Size);
             Elements = resizedElements;
