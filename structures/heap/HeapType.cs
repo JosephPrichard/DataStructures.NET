@@ -1,4 +1,4 @@
-﻿namespace DataStructures.heap
+﻿namespace DataStructures.structures.heap
 {
     public enum HeapType
     {

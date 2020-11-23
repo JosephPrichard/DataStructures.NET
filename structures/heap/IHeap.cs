@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataStructures.heap
+﻿namespace DataStructures.structures.heap
 {
     public interface IHeap<E>
     {
