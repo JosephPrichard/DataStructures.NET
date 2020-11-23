@@ -10,7 +10,7 @@ namespace DataStructures
     public class Program 
     {
         private static void Main(string[] args) {
-            TestAl();
+            TestPq();
         }
 
         private static void Output<E>(ICollection<E> list) {
@@ -24,35 +24,8 @@ namespace DataStructures
             return random.Next(min, max);
         }
 
-        private static void TestBinaryHeap() {
-            var heap = new BinaryHeap<int>(HeapType.Min);
-            heap.Push(22);heap.Push(22);
-            heap.Push(3);
-            heap.Push(62);
-            heap.Push(-701);
-            heap.Push(5);
-            heap.Push(-21);
-            while(!heap.IsEmpty()) {
-                Console.WriteLine("Pop: " + heap.Pop());
-            }
-            Console.WriteLine("Push More ");
-            for(var i = 0; i < 100; i++) {
-                heap.Push(RandomNumber(-1000,1000));
-            }
-            while(!heap.IsEmpty()) {
-                Console.WriteLine("Pop: " + heap.Pop());Console.WriteLine("Pop: " + heap.Pop());
-            }
-            Console.WriteLine("PopPush ");
-            heap.Push(1);
-            for(var i = 0; i < 5; i++) {
-                Console.WriteLine("PopPush: " + heap.PopPush(RandomNumber(-100,100)));
-                Console.WriteLine("Peek: " + heap.Peek());
-            }
-            Console.WriteLine("Complete.");
-        }
-
-        private static void TestArrayHeap() {
-            var heap = new ArrayHeap<int>(HeapType.Min);
+        private static void TestPq() {
+            var heap = new Heap<int>(HeapType.Min);
             heap.Push(22);
             heap.Push(3);
             heap.Push(62);

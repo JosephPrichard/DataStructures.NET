@@ -2,21 +2,27 @@
 using DataStructures.structures.stack;
 using JetBrains.Annotations;
 
-namespace DataStructures.structures.heap
+namespace DataStructures.structures.binaryTree
 {
-    public class BinaryHeap<E> : IHeap<E> where E : IComparable
+    public enum SearchType
+    {
+        Min,
+        Max
+    }
+    
+    public class BinarySearchTree<E> where E : IComparable
     {
         private Node<E> Root;
         public int Size { private set; get; }
         private Func<E, E, bool> DoCompare;
 
-        public BinaryHeap(HeapType type) {
+        public BinarySearchTree(SearchType type) {
             SetHeapType(type);
             Root = null;
         }
 
-        private void SetHeapType(HeapType type) {
-            if(type == HeapType.Min) 
+        private void SetHeapType(SearchType type) {
+            if(type == SearchType.Min) 
                 DoCompare = (ele1, ele2) => ele1.CompareTo(ele2) == -1;
             else 
                 DoCompare = (ele1, ele2) => ele1.CompareTo(ele2) == 1;
@@ -30,11 +36,6 @@ namespace DataStructures.structures.heap
             return Size == 0;  
         }
 
-        public void PrintConsole() {
-            PrintConsole(Root);
-            Console.WriteLine();
-        }
-        
         //O(log(n))
         public void Push(E e) {
             var newNode = new Node<E>(e);
@@ -84,8 +85,7 @@ namespace DataStructures.structures.heap
         
         [AssertionMethod]
         private void CheckEmpty() {
-            if(Size == 0)
-                throw new EmptyHeapException();
+            
         }
 
         private static ICollection<int> Navigate(int pos) {
@@ -186,23 +186,6 @@ namespace DataStructures.structures.heap
             var val = n1.Val;
             n1.Val = n2.Val;
             n2.Val = val;
-        }
-
-        private static void PrintConsole(Node<E> node) {
-            Console.Write(" | ");
-            Console.Write("P: " + node.Val);
-            if(node.Left != null) {
-                Console.Write(", L: " + node.Left.Val);
-            }
-            if(node.Right != null) {
-                Console.Write(", R: " + node.Right.Val);
-            }
-            if(node.Left != null) {
-                PrintConsole(node.Left);
-            }
-            if(node.Right != null) {
-                PrintConsole(node.Right);
-            }
         }
 
     }

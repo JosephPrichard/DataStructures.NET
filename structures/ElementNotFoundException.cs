@@ -1,4 +1,4 @@
-﻿namespace DataStructures.structures.list
+﻿namespace DataStructures.structures
 {
     public class ElementNotFoundException : System.Exception
     {

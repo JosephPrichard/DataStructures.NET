@@ -12,10 +12,10 @@ namespace DataStructures.structures.list
     public class Sorter<E> where E : IComparable
     {
         private readonly Func<E, E, bool> DoCompare;
-        private readonly SortType type;
+        private readonly SortType Type;
 
         public Sorter(SortType typeIn) {
-            type = typeIn;
+            Type = typeIn;
             if(typeIn == SortType.Asc) 
                 DoCompare = (ele1, ele2) => ele1.CompareTo(ele2) == -1;
             else 
@@ -31,18 +31,18 @@ namespace DataStructures.structures.list
         //---HeapSort--O(nlog(n))---//
         
         public void HeapSort(ArrayList<E> list) {
-            var heap = type == SortType.Asc ? new ArrayHeap<E>(HeapType.Max,list.Elements,list.Size) 
-                : new ArrayHeap<E>(HeapType.Min,list.Elements,list.Size);
+            var heap = Type == SortType.Asc ? new Heap<E>(HeapType.Max,list.Elements,list.Size) 
+                : new Heap<E>(HeapType.Min,list.Elements,list.Size);
             while(heap.Size > 0) {
-                heap.Remove();
+                heap.Remove(0);
             }
         }
         
         public void HeapSort(E[] arr) {
-            var heap = type == SortType.Asc ? new ArrayHeap<E>(HeapType.Max,arr) 
-                : new ArrayHeap<E>(HeapType.Min,arr);
+            var heap = Type == SortType.Asc ? new Heap<E>(HeapType.Max,arr) 
+                : new Heap<E>(HeapType.Min,arr);
             while(heap.Size > 0) {
-                heap.Remove();
+                heap.Remove(0);
             }
         }
         
