@@ -2,7 +2,8 @@
  Implementations of some common abstract data structures in C#.
 
 ### LinkedList
-### Vector
+### ArrayList
 ### Stack
 ### Heap
 
+Also includes implementations of MergeSort, QuickSort, and HeapSort
