@@ -4,6 +4,6 @@
 ### LinkedList
 ### ArrayList
 ### Stack
-### Heap
+### PriorityQueue
 
 Also includes implementations of MergeSort, and QuickSort
