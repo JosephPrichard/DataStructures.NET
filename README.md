@@ -6,4 +6,4 @@
 ### Stack
 ### Heap
 
-Also includes implementations of MergeSort, QuickSort, and HeapSort
+Also includes implementations of MergeSort, and QuickSort
