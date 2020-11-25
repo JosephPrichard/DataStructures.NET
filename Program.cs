@@ -181,6 +181,8 @@ namespace DataStructures
             Console.WriteLine("Min: " + tree.Min());
             Console.WriteLine("Max: " + tree.Max());
             Console.WriteLine("Val: " + tree.Retrieve(-4));
+            Console.WriteLine("LHeight: " + tree.LeftHeight());
+            Console.WriteLine("RHeight: " + tree.RightHeight());
             foreach(var v in tree.PreOrder()) {
                 Console.Write(v + ", ");
             }

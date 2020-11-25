@@ -10,16 +10,6 @@ namespace DataStructures.structures.tree
         internal Node<V> Root;
         public int Size { private set; get; }
 
-        public V Min() {
-            EmptyCheck();
-            return FindMin(Root).Val();
-        }
-
-        public V Max() {
-            EmptyCheck();
-            return FindMax(Root).Val();
-        }
-        
         public void Push(int key, V v) {
             var newNode = new Node<V>(key, v);
             if(Root == null) {
@@ -46,7 +36,7 @@ namespace DataStructures.structures.tree
             }
         }
 
-        private static void Insert(Node<V> parent, Node<V> n) {
+        private void Insert(Node<V> parent, Node<V> n) {
             if(n.Key() < parent.Key()) {
                 if(parent.Left == null) {
                     parent.Left = n;
@@ -70,7 +60,7 @@ namespace DataStructures.structures.tree
             }
         }
         
-        private static Node<V> Search(Node<V> curr, int key) {
+        private Node<V> Search(Node<V> curr, int key) {
             if(key < curr.Key()) {
                 return curr.Left != null ? Search(curr.Left, key) : null;
             } 
@@ -80,20 +70,6 @@ namespace DataStructures.structures.tree
             else {
                 return curr;
             }
-        }
-
-        private static Node<V> FindMin(Node<V> node) {
-            while(node.Left != null) {
-                node = node.Left;
-            }
-            return node;
-        }
-        
-        private static Node<V> FindMax(Node<V> node) {
-            while(node.Right != null) {
-                node = node.Right;
-            }
-            return node;
         }
 
         private void Remove(Node<V> r) {
@@ -130,8 +106,58 @@ namespace DataStructures.structures.tree
                 newNode.Parent = node.Parent;
             }
         }
+        
+        public V Min() {
+            EmptyCheck();
+            return FindMin(Root).Val();
+        }
 
-        private static void Move(Node<V> from, Node<V> to) {
+        public V Max() {
+            EmptyCheck();
+            return FindMax(Root).Val();
+        }
+
+        private Node<V> FindMin(Node<V> node) {
+            while(node.Left != null) {
+                node = node.Left;
+            }
+            return node;
+        }
+        
+        private Node<V> FindMax(Node<V> node) {
+            while(node.Right != null) {
+                node = node.Right;
+            }
+            return node;
+        }
+        
+        public int LeftHeight() {
+            return LeftHeight(Root);
+        }
+        
+        public int RightHeight() {
+            return RightHeight(Root);
+        }
+
+        public int LeftHeight(Node<V> node) {
+            var len = 0;
+            while(node.Left != null) {
+                node = node.Left;
+                len++;
+            }
+            return len;
+        }
+        
+        public int RightHeight(Node<V> node) {
+            var len = 0;
+            while(node.Right != null) {
+                node = node.Right;
+                len++;
+            }
+            return len;
+        }
+        
+        private void Move(Node<V> from, Node<V> to) {
             to.Data = from.Data;
         }
         
@@ -143,7 +169,7 @@ namespace DataStructures.structures.tree
             }
         }
 
-        private static void PreOrder(Node<V> node, ArrayList<V> list) {
+        private void PreOrder(Node<V> node, ArrayList<V> list) {
             if(node == null)
                 return;
             list.PushBack(node.Val());
@@ -163,7 +189,7 @@ namespace DataStructures.structures.tree
             }
         }
         
-        private static void PostOrder(Node<V> node, ArrayList<V> list) {
+        private void PostOrder(Node<V> node, ArrayList<V> list) {
             if(node == null)
                 return;
             if(node.Left != null) {
@@ -183,7 +209,7 @@ namespace DataStructures.structures.tree
             }
         }
         
-        private static void InOrder(Node<V> node, ArrayList<V> list) {
+        private void InOrder(Node<V> node, ArrayList<V> list) {
             if(node == null)
                 return;
             if(node.Left != null) {
@@ -208,7 +234,7 @@ namespace DataStructures.structures.tree
             Console.WriteLine();
         }
         
-        private static void PrintConsole(Node<V> node) {
+        private void PrintConsole(Node<V> node) {
             Console.Write(" | ");
             Console.Write("P: " + node.Key());
             if(node.Left != null) {
