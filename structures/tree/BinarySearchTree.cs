@@ -10,7 +10,7 @@ namespace DataStructures.structures.tree
         internal Node<V> Root;
         public int Size { private set; get; }
 
-        public void Push(int key, V v) {
+        public void Insert(int key, V v) {
             var newNode = new Node<V>(key, v);
             if(Root == null) {
                 Root = newNode;
@@ -23,13 +23,13 @@ namespace DataStructures.structures.tree
         
         public V Retrieve(int key) {
             EmptyCheck();
-            var node = Search(Root,key);
+            var node = Retrieve(Root,key);
             return node != null ? node.Val() : default;
         }
 
         public void Remove(int key) {
             EmptyCheck();
-            var node = Search(Root,key);
+            var node = Retrieve(Root,key);
             if(node != null) {
                 Remove(node);
                 Size--;
@@ -60,12 +60,12 @@ namespace DataStructures.structures.tree
             }
         }
         
-        private Node<V> Search(Node<V> curr, int key) {
+        private Node<V> Retrieve(Node<V> curr, int key) {
             if(key < curr.Key()) {
-                return curr.Left != null ? Search(curr.Left, key) : null;
+                return curr.Left != null ? Retrieve(curr.Left, key) : null;
             } 
             else if(key > curr.Key()) {
-                return curr.Right != null ? Search(curr.Right, key) : null;
+                return curr.Right != null ? Retrieve(curr.Right, key) : null;
             }
             else {
                 return curr;
