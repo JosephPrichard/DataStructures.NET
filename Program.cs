@@ -178,8 +178,9 @@ namespace DataStructures
             tree.Push(11,'K');
             tree.Remove(-6);
             tree.PrintConsole();
-            Console.WriteLine(tree.Min());
-            Console.WriteLine(tree.Max());
+            Console.WriteLine("Min: " + tree.Min());
+            Console.WriteLine("Max: " + tree.Max());
+            Console.WriteLine("Val: " + tree.Retrieve(-4));
             foreach(var v in tree.PreOrder()) {
                 Console.Write(v + ", ");
             }

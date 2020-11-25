@@ -15,27 +15,26 @@
             return isBst;
         }
         
-        public static void Swap(Node<V> left, Node<V> right) {
-            var parent = left == null ? right.Parent : left.Parent;
+        public static void Swap(Node<V> parent, Node<V> left, Node<V> right) {
             parent.Left = right;
             parent.Right = left;
         }
 
         public static void Invert(Node<V> root) {
-            Invert(root.Left,root.Right);
+            Invert(root,root.Left,root.Right);
         }
 
-        private static void Invert(Node<V> left, Node<V> right) {
+        private static void Invert(Node<V> parent, Node<V> left, Node<V> right) {
             var hasLeft = left != null;
             var hasRight = right != null;
             if(hasLeft || hasRight) {
-                Swap(left, right);
+                Swap(parent,left, right);
             }
             if(hasLeft) {
-                Invert(left.Left, left.Right);
+                Invert(left,left.Left, left.Right);
             }
             if(hasRight) {
-                Invert(right.Left, right.Right);
+                Invert(right,right.Left, right.Right);
             }
         }
     }

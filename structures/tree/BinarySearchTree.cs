@@ -30,10 +30,20 @@ namespace DataStructures.structures.tree
             }
             Size++;
         }
+        
+        public V Retrieve(int key) {
+            EmptyCheck();
+            var node = Search(Root,key);
+            return node != null ? node.Val() : default;
+        }
 
         public void Remove(int key) {
             EmptyCheck();
-            FindAndRemove(Root,key);
+            var node = Search(Root,key);
+            if(node != null) {
+                Remove(node);
+                Size--;
+            }
         }
 
         private static void Insert(Node<V> parent, Node<V> n) {
@@ -59,21 +69,16 @@ namespace DataStructures.structures.tree
                 throw new DuplicateKeyException();
             }
         }
-
-        private void FindAndRemove(Node<V> curr, int key) {
+        
+        private static Node<V> Search(Node<V> curr, int key) {
             if(key < curr.Key()) {
-                if(curr.Left != null) {
-                    FindAndRemove(curr.Left,key);
-                }
+                return curr.Left != null ? Search(curr.Left, key) : null;
             } 
             else if(key > curr.Key()) {
-                if(curr.Right != null) {
-                    FindAndRemove(curr.Right,key);
-                }
+                return curr.Right != null ? Search(curr.Right, key) : null;
             }
             else {
-                Remove(curr);
-                Size--;
+                return curr;
             }
         }
 
