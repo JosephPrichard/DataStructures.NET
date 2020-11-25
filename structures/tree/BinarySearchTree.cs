@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using DataStructures.structures.list;
 using JetBrains.Annotations;
 
@@ -8,18 +7,16 @@ namespace DataStructures.structures.tree
 {
     public class BinarySearchTree<V> where V : IComparable
     {
-        private Node<V> Root;
+        internal Node<V> Root;
         public int Size { private set; get; }
 
         public V Min() {
-            if(Root == null)
-                throw new EmptyTreeException();
+            EmptyCheck();
             return FindMin(Root).Val();
         }
 
         public V Max() {
-            if(Root == null)
-                throw new EmptyTreeException();
+            EmptyCheck();
             return FindMax(Root).Val();
         }
         
@@ -35,8 +32,7 @@ namespace DataStructures.structures.tree
         }
 
         public void Remove(int key) {
-            if(Root == null)
-                throw new EmptyTreeException();
+            EmptyCheck();
             FindAndRemove(Root,key);
         }
 
@@ -198,6 +194,19 @@ namespace DataStructures.structures.tree
             if(node.Right != null) {
                 InOrder(node.Right,list);
             }
+        }
+
+        public static bool IsBst(Node<V> node) {
+            var hasLeft = node.Left != null;
+            var hasRight = node.Right!= null;
+            var isBst = (!hasLeft || node.Left.Key() < node.Key()) && (!hasRight || node.Right.Key() > node.Key());
+            if(hasLeft) {
+                isBst = isBst && IsBst(node.Left);
+            }
+            if(hasRight) {
+                isBst = isBst && IsBst(node.Right);
+            }
+            return isBst;
         }
 
         [AssertionMethod]

@@ -192,6 +192,7 @@ namespace DataStructures
                 Console.Write(v + ", ");
             }
             Console.WriteLine();
+            Console.WriteLine(BinarySearchTree<char>.IsBst(tree.Root));
         }
 
         private static void TestMergeSort() {
