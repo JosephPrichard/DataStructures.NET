@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace DataStructures.structures.tree
 {
-    public class BinarySearchTree<V> where V : IComparable
+    public class BinarySearchTree<V>
     {
         internal Node<V> Root;
         public int Size { private set; get; }
@@ -126,12 +126,6 @@ namespace DataStructures.structures.tree
             }
         }
 
-        public static void Swap(Node<V> node1, Node<V> node2) {
-            var pair = node1.Data;
-            node1.Data = node2.Data;
-            node2.Data = pair;
-        }
-        
         private static void Move(Node<V> from, Node<V> to) {
             to.Data = from.Data;
         }
@@ -194,19 +188,6 @@ namespace DataStructures.structures.tree
             if(node.Right != null) {
                 InOrder(node.Right,list);
             }
-        }
-
-        public static bool IsBst(Node<V> node) {
-            var hasLeft = node.Left != null;
-            var hasRight = node.Right!= null;
-            var isBst = (!hasLeft || node.Left.Key() < node.Key()) && (!hasRight || node.Right.Key() > node.Key());
-            if(hasLeft) {
-                isBst = isBst && IsBst(node.Left);
-            }
-            if(hasRight) {
-                isBst = isBst && IsBst(node.Right);
-            }
-            return isBst;
         }
 
         [AssertionMethod]
