@@ -42,11 +42,12 @@ namespace DataStructures.structures.hash
         }
 
         public bool Remove(K key) {
-            var head  = table[Hash(key)];
+            var h = Hash(key);
+            var head  = table[h];
             var prev = head;
             if(head != null) {
                 if(head.Val.Key.Equals(key)) {
-                    table[Hash(key)] = head.Next;
+                    table[h] = head.Next;
                     return true;
                 }
                 head = head.Next;
