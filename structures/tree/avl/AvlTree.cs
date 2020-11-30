@@ -37,9 +37,9 @@ namespace DataStructures.structures.tree.avl
             if(node != null) {
                 Size--;
                 Remove(node);
-                var unbalanced = FindImbalanced(node.Parent);
-                if(unbalanced != null) {
-                    Rotate(unbalanced);
+                var imbalanced = FindImbalanced(node.Parent);
+                if(imbalanced != null) {
+                    Rotate(imbalanced);
                 }
             }
             return node != null;
