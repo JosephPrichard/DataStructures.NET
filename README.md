@@ -6,6 +6,7 @@
 ### Stack
 ### PriorityQueue
 ### BinaryTree
+### AVLTree
 ### HashTable
 
 Also includes implementations of MergeSort, and QuickSort
