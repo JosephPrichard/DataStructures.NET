@@ -1,5 +1,5 @@
 # DataStructures
- Implementations of some common abstract data structures in C#.
+ Implementations of some common abstract data structures and algorithms in C#.
 
 ### LinkedList
 ### ArrayList
@@ -8,5 +8,3 @@
 ### BinaryTree
 ### AVLTree
 ### HashTable
-
-Also includes implementations of MergeSort, and QuickSort
