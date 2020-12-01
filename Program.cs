@@ -242,12 +242,22 @@ namespace DataStructures
 
         public static void TestAvlBalancing3() {
             var tree = new AvlTree<double, char>();
-            tree.Put(1,'A');
-            tree.Put(2,'A');
-            tree.Put(3,'A');
+            tree.Put(5,'A');
+            tree.Put(2,'B');
+            tree.Put(8,'C');
+            tree.Put(1,'D');
+            tree.Put(3,'E');
+            tree.Put(7,'F');
+            tree.Put(9,'G');
+            tree.Put(4,'H');
+            tree.Put(6,'I');
             tree.PrintConsole();
-            tree.Put(-1,'A');
-            tree.Put(0,'A');
+            tree.Remove(1);
+            tree.Remove(8);
+            tree.Remove(5);
+            tree.PrintConsole();
+            tree.Remove(9);
+            tree.Remove(7);
             tree.PrintConsole();
         }
 

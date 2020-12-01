@@ -136,14 +136,6 @@ namespace DataStructures.structures.tree.avl
             return val1 > val2 ? val1 : val2;
         }
 
-        private void AdjustHeights(Node<K,V> node) {
-            node.Height = Max(Height(node.Left), 
-                Height(node.Right)) + 1;
-            if(node.Parent != null) {
-                AdjustHeights(node.Parent);
-            }
-        }
-
         private int Height(Node<K,V> node) {
             return node == null ? 0 : node.Height;
         }  
@@ -155,7 +147,18 @@ namespace DataStructures.structures.tree.avl
         private bool ImBalanced(int balance) {
             return balance >= 2 || balance <= -2;
         }
+        
+        private void AdjustHeights(Node<K,V> node) {
+            AdjustHeight(node);
+            if(node.Parent != null) {
+                AdjustHeights(node.Parent);
+            }
+        }
 
+        private void AdjustHeight(Node<K,V> node) {
+            node.Height = Max(Height(node.Left), Height(node.Right)) + 1;
+        }
+        
         private Node<K,V> FindImbalanced(Node<K,V> node, Stack<int> balances) {
             if(node != null) {
                 var balance = CalcBalance(node);
@@ -180,6 +183,7 @@ namespace DataStructures.structures.tree.avl
                     LeftRightRotation(imbalanced.Left);
                 }
             }
+            AdjustHeights(imbalanced);
         }
 
         private void SetRotationParent(Node<K,V> parentParent, Node<K,V> parent, Node<K,V> middle) {
@@ -206,7 +210,6 @@ namespace DataStructures.structures.tree.avl
                 left.Parent = parent;
             }
             SetRotationParent(parentParent, parent, middle);
-            AdjustHeights(parent);
         }
         
         private void RightRotation(Node<K,V> middle) {
@@ -220,7 +223,6 @@ namespace DataStructures.structures.tree.avl
                 right.Parent = parent;
             }
             SetRotationParent(parentParent, parent, middle);
-            AdjustHeights(parent);
         }
 
         private void LeftRightRotation(Node<K,V> middle) {
@@ -236,7 +238,7 @@ namespace DataStructures.structures.tree.avl
                 childLeft.Parent = middle;
             }
             RightRotation(child);
-            AdjustHeights(middle);
+            AdjustHeight(middle);
         }
         
         private void RightLeftRotation(Node<K,V> middle) {
@@ -252,7 +254,7 @@ namespace DataStructures.structures.tree.avl
                 childRight.Parent = middle;
             }
             LeftRotation(child);
-            AdjustHeights(middle);
+            AdjustHeight(middle);
         }
         
         private Node<K,V> Put(Node<K,V> tree, KeyValuePair<K,V> pair) {
